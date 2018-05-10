@@ -11,5 +11,5 @@ set -e
 if [ ! -e ".git" ]; then
     git init
     git add -A
-    git cm -m 'Initial commit'
+    git commit -m 'Initial commit'
 fi
