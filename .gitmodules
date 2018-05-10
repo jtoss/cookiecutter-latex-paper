@@ -1,0 +1,3 @@
+[submodule "{{cookiecutter.project_slug}}/meerkat_adminlte"]
+	path = {{cookiecutter.project_slug}}/meerkat_adminlte
+	url = https://github.com/meerkat-cv/meerkat_adminlte.git

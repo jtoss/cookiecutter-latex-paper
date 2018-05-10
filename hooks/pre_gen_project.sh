@@ -8,9 +8,7 @@
 
 set -e
 
-if [ ! -e ".git" ]; then
-    git init
-    git add -A
-#    git submodule init sync update
-    git commit -m 'Initial commit'
-fi
+#if [ ! -e ".git" ]; then
+git submodule sync --recursive
+git submodule update --init --recursive
+#fi
