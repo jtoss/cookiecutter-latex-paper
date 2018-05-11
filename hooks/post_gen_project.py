@@ -43,9 +43,17 @@ def recurse_submodule(template):
         subprocess.run(["git", "submodule",  "sync", "--recursive"], cwd=repo_dir)
         subprocess.run(["git", "submodule",  "update", "--init", "--recursive"], cwd=repo_dir)
         # remove this folder as it is empty  
-        shutil.rmtree( PROJECT_DIRECTORY+'/meerkat_adminlte')
+        submodule_dir = PROJECT_DIRECTORY+'/meerkat_adminlte'
+        try:
+            os.rmdir(submodule_dir)
+        except OSError as ex:
+            if ex.errno == errno.ENOTEMPTY:
+                print("directory not empty")
+                exit(1)
+        
         # replay
         cookiecutter(template,replay=True, overwrite_if_exists=True, output_dir="../",)
+        #submodule_init = 1;
 
 
     return submodule_init
@@ -61,4 +69,14 @@ if __name__ == '__main__':
         context = json.load(fd)
 
     #submodules_initialized = recurse_submodule(context['_template'])
-    submodules_initialized = recurse_submodule(TEMPLATE_NAME)
+    submodule_init = recurse_submodule(TEMPLATE_NAME)
+
+    if submodule_init == 0 :
+        print("commit stuff")
+        
+#if [ ! -e ".git" ]; then
+#    git init
+#    git add -A
+#    git commit -m 'Initial commit'
+#fi
+    
