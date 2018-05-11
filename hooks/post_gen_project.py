@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+""" This script is a workarround to fetch submodules recusively . 
+
+This script will be useless once the pull request https://github.com/audreyr/cookiecutter/pull/1048 is merged 
+
+"""
+
 from cookiecutter.repository import determine_repo_dir
 from cookiecutter.config import get_user_config
 from cookiecutter.main import cookiecutter
@@ -12,7 +18,6 @@ import subprocess
 
 TEMPLATE_NAME = "cookiecutter-latex-paper"
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
-
 
 def recurse_submodule(template):
     commit = False
@@ -42,7 +47,7 @@ def recurse_submodule(template):
     if (output[0] != ' ') :
         subprocess.run(["git", "submodule",  "sync", "--recursive"], cwd=repo_dir)
         subprocess.run(["git", "submodule",  "update", "--init", "--recursive"], cwd=repo_dir)
-        # remove this folder if it is empty ( because it was created with uninitialized submodule   
+        # remove this folder if it is empty ( because it was created with uninitialized submodule )
         submodule_dir = PROJECT_DIRECTORY+'/meerkat_adminlte'
         try:
             os.rmdir(submodule_dir)
