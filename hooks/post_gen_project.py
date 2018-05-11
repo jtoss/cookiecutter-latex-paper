@@ -15,7 +15,7 @@ PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
 
 def recurse_submodule(template):
-    submodule_init = 0
+    commit = False
     
     # get the cloned repo
     config_dict = get_user_config()
@@ -39,10 +39,10 @@ def recurse_submodule(template):
     
     print(output)
 
-    if (output[0] != ' '):
+    if (output[0] != ' ') :
         subprocess.run(["git", "submodule",  "sync", "--recursive"], cwd=repo_dir)
         subprocess.run(["git", "submodule",  "update", "--init", "--recursive"], cwd=repo_dir)
-        # remove this folder as it is empty  
+        # remove this folder if it is empty ( because it was created with uninitialized submodule   
         submodule_dir = PROJECT_DIRECTORY+'/meerkat_adminlte'
         try:
             os.rmdir(submodule_dir)
@@ -50,13 +50,16 @@ def recurse_submodule(template):
             if ex.errno == errno.ENOTEMPTY:
                 print("directory not empty")
                 exit(1)
-        
+                
         # replay
-        cookiecutter(template,replay=True, overwrite_if_exists=True, output_dir="../",)
-        #submodule_init = 1;
+        cookiecutter(template,replay=True, overwrite_if_exists=True, output_dir="../")
+        commit = False
+
+    else : 
+        commit = True
 
 
-    return submodule_init
+    return commit
     
 
 if __name__ == '__main__':
@@ -69,10 +72,12 @@ if __name__ == '__main__':
         context = json.load(fd)
 
     #submodules_initialized = recurse_submodule(context['_template'])
-    submodule_init = recurse_submodule(TEMPLATE_NAME)
+    commit = recurse_submodule(TEMPLATE_NAME)
 
-    if submodule_init == 0 :
+    if commit :
         print("commit stuff")
+    else
+        print("Submodules copied")
         
 #if [ ! -e ".git" ]; then
 #    git init
