@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from cookicutter.repository import determine_repo_dir
-from cookicutter.config import get_user_config
+from cookiecutter.repository import determine_repo_dir
+from cookiecutter.config import get_user_config
 
 import os
 
