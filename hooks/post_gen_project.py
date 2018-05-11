@@ -41,7 +41,7 @@ def recurse_submodule(template):
         subprocess.run(["git", "submodule",  "sync", "--recursive"], cwd=repo_dir)
         subprocess.run(["git", "submodule",  "update", "--init", "--recursive"], cwd=repo_dir)
         # replay
-        cookiecutter(template,replay=True);
+        cookiecutter(template,replay=True, overwrite_if_exists=True, output_dir="../",);
     
 
 if __name__ == '__main__':
