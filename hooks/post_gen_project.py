@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
     if commit :
         print("Initial commit")
-        if not os.listdir(".git"):
+        if not os.path.isdir(".git"):
             subprocess.run(["git", "init"])
             subprocess.run(["git", "add",  "-A"])
             subprocess.run(["git", "commit",  "-m", "'initial commit'"])
