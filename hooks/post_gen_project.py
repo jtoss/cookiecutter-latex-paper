@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
     if commit :
         print("commit stuff")
-    else
+    else :
         print("Submodules copied")
         
 #if [ ! -e ".git" ]; then
