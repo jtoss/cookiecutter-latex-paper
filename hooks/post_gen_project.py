@@ -14,8 +14,9 @@ PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
 
 def recurse_submodule(template):
+    submodule_init = 0
+    
     # get the cloned repo
-
     config_dict = get_user_config()
     print(config_dict)
 
@@ -40,8 +41,13 @@ def recurse_submodule(template):
     if (output[0] != ' '):
         subprocess.run(["git", "submodule",  "sync", "--recursive"], cwd=repo_dir)
         subprocess.run(["git", "submodule",  "update", "--init", "--recursive"], cwd=repo_dir)
+        # remove this folder as it is empty  
+        shutil.rmtree( PROJECT_DIRECTORY+'/meerkat_adminlte')
         # replay
-        cookiecutter(template,replay=True, overwrite_if_exists=True, output_dir="../",);
+        cookiecutter(template,replay=True, overwrite_if_exists=True, output_dir="../",)
+
+
+    return submodule_init
     
 
 if __name__ == '__main__':
@@ -53,4 +59,4 @@ if __name__ == '__main__':
     with open('.cookiecutter.json', 'r') as fd:
         context = json.load(fd)
 
-    recurse_submodule(context['_template'])
+    submodules_initialized = recurse_submodule(context['_template'])
