@@ -6,6 +6,8 @@ from cookiecutter.config import get_user_config
 import os
 import sys
 import json
+import shutil
+import subprocess
 
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
@@ -19,16 +21,23 @@ def recurse_submodule(template):
     repo_dir, cleanup = determine_repo_dir(
         template=template,
         checkout=None,
-        no_input=False,
+        no_input=True,
         abbreviations=config_dict['abbreviations'],
         clone_to_dir=config_dict['cookiecutters_dir']
     )
 
     # run a git submodule update
     print("repo_dir: ", repo_dir)
+    subprocess.run(["git", "submodule",  "sync", "--recursive"], cwd=repo_dir)
+    subprocess.run(["git", "submodule",  "update", "--init", "--recursive"], cwd=repo_dir)
 
 if __name__ == '__main__':
-    with open(sys.argv[1], 'r') as fd:
+    print("cur_dir: ", PROJECT_DIRECTORY);
+
+    files = [ f for f in os.listdir('.') ]
+    print(files)
+    
+    with open('.cookiecutter.json', 'r') as fd:
         context = json.load(fd)
 
     recurse_submodule(context['_template'])
