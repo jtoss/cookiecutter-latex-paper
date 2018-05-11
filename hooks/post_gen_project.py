@@ -29,11 +29,17 @@ def recurse_submodule(template):
 
     # run a git submodule update
     print("repo_dir: ", repo_dir)
-    subprocess.run(["git", "submodule",  "sync", "--recursive"], cwd=repo_dir)
-    subprocess.run(["git", "submodule",  "update", "--init", "--recursive"], cwd=repo_dir)
 
-    # replay
-    cookiecutter(template,replay=True);
+    # check any submodule not initialzed
+    res = subprocess.run(["git", "submodule",  "status"], cwd=repo_dir)
+
+    print(res)
+
+    if (res[0] != ' '):
+        subprocess.run(["git", "submodule",  "sync", "--recursive"], cwd=repo_dir)
+        subprocess.run(["git", "submodule",  "update", "--init", "--recursive"], cwd=repo_dir)
+        # replay
+        cookiecutter(template,replay=True);
     
 
 if __name__ == '__main__':
