@@ -8,7 +8,6 @@ This script will be useless once the pull request https://github.com/audreyr/coo
 
 from cookiecutter.repository import determine_repo_dir
 from cookiecutter.config import get_user_config
-from cookiecutter.main import cookiecutter
 
 import os
 import sys
