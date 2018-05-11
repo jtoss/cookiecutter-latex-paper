@@ -75,13 +75,12 @@ if __name__ == '__main__':
     commit = recurse_submodule(TEMPLATE_NAME)
 
     if commit :
-        print("commit stuff")
+        print("Initial commit")
+        if not os.listdir(".git"):
+            subprocess.run(["git", "init"])
+            subprocess.run(["git", "add",  "-A"])
+            subprocess.run(["git", "commit",  "-m", "'initial commit'"])
+        
     else :
         print("Submodules copied")
-        
-#if [ ! -e ".git" ]; then
-#    git init
-#    git add -A
-#    git commit -m 'Initial commit'
-#fi
     
