@@ -33,9 +33,9 @@ def recurse_submodule(template):
     # check any submodule not initialzed
     result = subprocess.run(["git", "submodule",  "status"], cwd=repo_dir , stdout=subprocess.PIPE)
 
-    print(res.stdout)
+    print(result.stdout)
 
-    if (res.stdout[0] != ' '):
+    if (result.stdout[0] != ' '):
         subprocess.run(["git", "submodule",  "sync", "--recursive"], cwd=repo_dir)
         subprocess.run(["git", "submodule",  "update", "--init", "--recursive"], cwd=repo_dir)
         # replay
