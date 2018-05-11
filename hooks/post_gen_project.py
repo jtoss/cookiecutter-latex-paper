@@ -10,6 +10,7 @@ import json
 import shutil
 import subprocess
 
+TEMPLATE_NAME = "cookiecutter-latex-paper"
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
 
@@ -31,7 +32,7 @@ def recurse_submodule(template):
     # run a git submodule update
     print("repo_dir: ", repo_dir)
 
-    # check any submodule not initialzeda
+    # check any submodule not initialzed
     result = subprocess.run(["git", "submodule",  "status"], cwd=repo_dir , stdout=subprocess.PIPE)
 
     output = result.stdout.decode()
@@ -59,4 +60,5 @@ if __name__ == '__main__':
     with open('.cookiecutter.json', 'r') as fd:
         context = json.load(fd)
 
-    submodules_initialized = recurse_submodule(context['_template'])
+    #submodules_initialized = recurse_submodule(context['_template'])
+    submodules_initialized = recurse_submodule(TEMPLATE_NAME)
