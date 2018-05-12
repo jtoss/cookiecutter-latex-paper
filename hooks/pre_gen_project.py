@@ -15,7 +15,7 @@ import json
 import shutil
 import subprocess
 
-TEMPLATE_NAME = "cookiecutter-latex-paper"
+TEMPLATE_NAME = "{{cookiecutter._template}}"
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
 def recurse_submodule(template):
@@ -56,6 +56,8 @@ def recurse_submodule(template):
 
 if __name__ == '__main__':
     print("cur_dir: ", PROJECT_DIRECTORY);
+
+    print("template: {{cookiecutter._template}} " );
 
     recurse_submodule(TEMPLATE_NAME)
 
